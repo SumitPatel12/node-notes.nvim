@@ -18,25 +18,22 @@ end
 -- NOTE: Props to tjdevries for making life easier, adven-of-neovim series for the win.
 local function create_floating_buffer(opts)
 	opts = opts or {}
-	local width = opts.width or math.floor(vim.o.columns * 0.8)
-	local height = opts.width or math.floor(vim.o.lines * 0.8)
-
-	-- Calculate the position of the center of the window.
-	local col = math.floor((vim.o.columns - width) / 2)
-	local row = math.floor((vim.o.lines - width) / 2)
 
 	-- Create a buffer
 	local buf = nil
 	-- TODO: If handle the case where the object already has notes and open them in the buffer.
 	buf = vim.api.nvim_create_buf(false, true) -- No file, scratch buffer
 
+	-- TODO:
+	-- Decide what all options need to be configurabel.
+	-- Add some calcualtions to see where the floating window fits. There may be auto configs for it in the docs so check them out first.
 	-- Define window configuration
 	local win_config = {
 		relative = "cursor",
-		width = width,
-		height = height,
-		col = col,
-		row = row,
+		width = 50,
+		height = 10,
+		col = 0,
+		row = 1,
 		style = "minimal",
 		border = "rounded",
 	}
@@ -48,11 +45,14 @@ local function create_floating_buffer(opts)
 end
 
 M.open_floating_notes_for_object = function()
+	-- TODO: Wire up options if applicable.
 	local floating_buffer = create_floating_buffer(nil)
 
 	-- TODO: Do this once notes are in place.
 	-- If notes exist for this object set the buffer with the lines. Will uncoment after I have something to store notes in place
 	-- vim.api.nvim_buf_set_lines(flot.buf, 0, -1, false, fetched_lines)
 end
+
+create_floating_buffer(nil)
 
 return M
